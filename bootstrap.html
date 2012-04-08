@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>PMS - Perl Messaging System</title>
+
+<link href="bootstrap.css" rel="stylesheet">
+<link href="bootstrap-responsive.css" rel="stylesheet">
+</head>
+<body>
+	<br><div class="header" align="center" color="white"><h2> PMS - Perl Messaging System</h2><br>
+		<h3 align="center">Administrationsinterface<h3><br>
+	</div>
+<div class="container" color="black">
+	<div class="row" background="gray">
+		
+		<div class="span2">
+			<div class="well">					
+				<a  class="btn" href="#">Benutzer verwalten</a><br><br>
+				<a class="btn" href="#">Backlog anzeigen</a><br><br>
+				<a class="btn" href="#">Userrechte bearbeiten</a><br><br>
+			</div>
+		</div>
+		<div class="span10">
+			<div class="well leaderboard">
+				<p ><b><h3 align="center">Bitte geben Sie ihre Zugangsdaten ein</h3></b><br><br><br>
+					<form class="well form-inline" action="/cgi-bin/bootstrap_admin_session.cgi" method="POST" enctype=" text/plain">  
+					<p align="center">	<input align="center" type="text" class="input-small" placeholder="User" size="30" maxlength="30" name ="user">  
+					<input align="center" type="password" class="input-small" placeholder="Password" size = "30" maxlength = "30" name="password">  
+					<button type="submit" class="btn">Anmelden</button> 
+				</p>
+					
+</form> 
+				<br><br><br><br></p>
+			</div>
+</div>
+</div>
+
+</body>
+</html>
