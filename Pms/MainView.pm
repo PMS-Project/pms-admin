@@ -46,7 +46,7 @@ sub render{
   foreach my $curr (@PmsConfig::modules){
     my $modConf = {
       NAME => $curr->{name},
-      HREF => "module.pl?mod=".$curr->{fqn}
+      HREF => "module.pl?mod=".$curr->{fqn}.";view=".$curr->{view}
     };
     push(@modules,$modConf);
   }

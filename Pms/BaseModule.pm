@@ -35,4 +35,8 @@ sub javascripts{
   die "Abstract Function";
 }
 
+sub dataRequest{
+  die "Abstract Function";
+}
+
 1;

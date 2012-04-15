@@ -94,4 +94,18 @@ sub javascripts{
   return \@scripts;
 }
 
+sub dataRequest{
+  my $self = shift or die "Need Ref";
+  my $cgi  = shift or die "Need CGI";
+  
+  my $action = $cgi->url_param('action');
+  if($action eq 'saveUser'){
+    
+  }elsif($action eq 'delUser'){
+    
+  }elsif($action eq 'getUsers'){
+    
+  }
+  return "{}";
+}
 1;

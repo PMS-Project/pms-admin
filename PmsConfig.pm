@@ -7,19 +7,23 @@ use strict;
 our @modules = (
   {
     fqn      => "Database",
-    name     => "Datenbank"
+    name     => "Datenbank",
+    view     => ""
   },
   {
     fqn      => "Backlog",
-    name     => "Backlog"
+    name     => "Backlog",
+    view     => ""
   },
   {
     fqn      => "Motd",
-    name     => "Motd"
+    name     => "Motd",
+    view     => ""
   },
   {
     fqn      => "Security",
-    name     => "Sicherheit"
+    name     => "Sicherheit",
+    view     => "addUser"
   }
 ); 
 return 1;
