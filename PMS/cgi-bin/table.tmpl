@@ -1,0 +1,16 @@
+<html>
+<head>
+	<title> <TMPL_VAR NAME="TITLE"></title>
+</head>
+<body>
+	<p>
+		<B><TMPL_VAR NAME="TITLE"></B><BR><BR>
+		<TMPL_LOOP NAME=TABLE_HASH>
+			<table border ="1"
+				<tr>
+					<td>Schl&uumlssel: <TMPL_VAR NAME=KEY></td>
+					<td>Wert:	   <TMPL_VAR NAME=VALUE></td>
+				</tr>	        
+		</TMPL_LOOP>
+</body>
+</html>

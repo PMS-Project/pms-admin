@@ -1,0 +1,72 @@
+
+
+
+
+div.top	{	/*border:1px#000000 solid;*/
+			/*border-bottom-style:dotted;*/
+			background-color:gray;
+			margin:0px;
+			color:white;
+			
+			width:800px;
+			height:75px;
+			position: absolute;
+			top: 50px;
+			left: 50px;
+		}
+div.body1	{	/*border-top:1px#000000 solid;*/
+			border-right:1px#000000 solid;
+			/*border-left:1px#000000 solid;*/
+			background-color:gray;
+			margin:opx;
+			width:800px;
+			height:800px;
+			position: absolute;
+			top:127px;					
+			left:50px;
+			
+		}
+div.navbar	{/*border-right:1px#000000 solid;
+			border-top:1px#000000 solid;*/
+			background-color:gray;
+			width:150px;
+			height:450px;
+			/*margin:2px;*/
+			position: absolute;
+			top: 128px;
+			left: 50px;
+			vertical-align:middle;
+		}
+div.body2{	/*border-top:1px#000000 solid;*/
+			border-right:1px#000000 solid;
+			/*border-left:1px#000000 solid;*/
+			background-color:gray;
+			margin:opx;
+			width:648px;
+			height:450px;
+			position: absolute;
+			top:0px;					
+			left:152px;
+
+		}
+div.footer	{	border:1px#000000 dotted,
+			background-color:gray;
+			clear:both;
+			width:800px;
+			position: absolute;
+			top: 675px;
+		}
+div.ul		{	list-style-type:none;
+			margin:0;
+			padding:0;
+		}
+a.menu { display:block; margin-bottom:3px; text-align:center; width:16ex;
+         border-style:groove; border-width:4px; padding:1px; text-decoration:none; }
+
+a.menu:link    { font-family:arial color:lightgray; background-color:transparent; }
+a.menu:visited {font-family:arial color:lightgray; background-color:transparent; }
+a.menu:hover   { font-family:arial color:lightgray; background-color:transparent; }
+a.menu:active  { font-family:arial color:lightgray; background-color:transparent; }
+		
+#white {color:white}
+
