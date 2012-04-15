@@ -28,7 +28,7 @@ else
   my $modname = $q->url_param('mod');
   my $packagename = "Pms::Modules::".$modname."::Mod";
   
-  eval "require $packagename" or print $q->header(-location=>"index.pl");
+  eval "require $packagename" or die "$@"; #print $q->header(-location=>"index.pl");
   my $mod = $packagename->new();
   
   my $baseView = Pms::MainView->new();

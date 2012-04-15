@@ -47,6 +47,22 @@ sub renderUserPage{
   my $cgi  = shift or die "Need CGI";
   
   my $baseTemplate = HTML::Template->new(filename => 'Pms/Modules/Security/tmpl/addUser.tmpl');
+  
+  my @users = ();
+  my $dbh = Pms::Session::databaseConnection();
+  my $sth = $dbh->prepare("SELECT id,username,forename,name from mod_security_users;");
+  if($sth->execute()){
+    while(my @val = $sth->fetchrow_array){
+      my $hash = {
+        USER_ID       => $val[0],
+        USER_NICKNAME => $val[1],
+        USER_NAME     => $val[2],
+        USER_FORENAME => $val[3],
+      };
+      push(@users,$hash);
+    }
+  }
+  $baseTemplate->param(USERS => \@users);
   return $baseTemplate->output;
   
 }
