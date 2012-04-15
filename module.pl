@@ -8,12 +8,15 @@ use CGI::Session ( '-ip_match' );
 
 use HTML::Template;
 use Pms::Session;
+use Pms::MainView;
 
 my $session = Pms::Session::get();
 my $q = CGI->new();
 
 if(!defined $session)
 {
+  warn "Redir";
+  exit(0);
   my $url = 'login.pl';
   if(defined $Pms::Session::lastError){
     $url .= "?error=$Pms::Session::lastError";
@@ -25,9 +28,9 @@ else
   my $modname = $q->url_param('mod');
   my $packagename = "Pms::Modules::".$modname."::Mod";
   
-  eval "require $packagename" or print $q->header(-location=>"index.pl");
+  eval "require $packagename" or die "Redir $packagename"; #print $q->header(-location=>"index.pl");
   my $mod = $packagename->new();
   
-  my @nav = $mod->navbarElements();
-  print $mod->render($q);
+  my $baseView = Pms::MainView->new();
+  $baseView->render($mod,$q,$session);
 }

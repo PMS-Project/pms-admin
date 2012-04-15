@@ -31,24 +31,30 @@
       <div class="well sidebar-nav">
         <ul class="nav nav-list">
           <li class="nav-header">Module</li>
-          <li class="active"><a href="#">Backlog</a></li>
-          <li><a href="#">Motd</a></li>
-          <li><a href="#">Security</a></li>
+          <TMPL_LOOP NAME="MODULE_NAVS">
+            <li>
+              <a href="<TMPL_VAR NAME=HREF>"><TMPL_VAR NAME="NAME"></a>
+            </li>
+          </TMPL_LOOP>
         </ul>
       </div><!--/.well -->
-      <TMPL_IF NAME="MODULE_NAVS">
+      <TMPL_IF NAME="MODULE_SUB_NAVS">
       <div class="well sidebar-nav">
         <ul class="nav nav-list">
-          <li class="nav-header"><TMPL_VAR NAME="CONTENT"></li>
-          <TMPL_LOOP NAME="MODULE_NAVS">
-            <li><a href="<TMPL_VAR NAME=HREF>"><TMPL_VAR NAME="NAME"></a></li>
+          <li class="nav-header"><TMPL_VAR NAME="MODULE_SUB_NAME"></li>
+          <TMPL_LOOP NAME="MODULE_SUB_NAVS">
+            <li>
+              <a href="<TMPL_VAR NAME=HREF>"><TMPL_VAR NAME="NAME"></a>
+            </li>
           </TMPL_LOOP>
         </ul>
       </div><!--/.well -->
       </TMPL_IF>
     </div><!--/span-->
     <div class="span9">
-      <TMPL_VAR NAME="CONTENT">
+      <div class="well">
+        <TMPL_VAR NAME="CONTENT">
+      </div>
     </div>
   </div>
 </div>  

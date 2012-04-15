@@ -10,15 +10,15 @@ our @modules = (
     name     => "Datenbank"
   },
   {
-    fqn      => "Backlog::Mod",
+    fqn      => "Backlog",
     name     => "Backlog"
   },
   {
-    fqn      => "Pms::Modules::Motd::Mod",
+    fqn      => "Motd",
     name     => "Motd"
   },
   {
-    fqn      => "Pms::Modules::Security::Mod",
+    fqn      => "Security",
     name     => "Sicherheit"
   }
 ); 
