@@ -60,6 +60,7 @@ sub render{
     $templParams{CONTENT}         = $content->renderContent($q);
     $templParams{MODULE_SUB_NAVS} = $content->navbarElements();
     $templParams{MODULE_SUB_NAME} = $content->name();
+    $baseTemplate->param(MODULE_SCRIPTS => $content->javascripts($q->url_param('view')));
   }else{
     $templParams{CONTENT} = $content;
   }

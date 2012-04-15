@@ -19,11 +19,19 @@ sub new{
   return $self;
 }
 
+sub name{
+  die "Abstract Function";
+}
+
 sub renderContent{
   die "Abstract Function";
 }
 
 sub navbarElements{
+  die "Abstract Function";
+}
+
+sub javascripts{
   die "Abstract Function";
 }
 

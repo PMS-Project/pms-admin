@@ -32,9 +32,9 @@ sub renderContent{
   my $self = shift or die "Need Ref";
   my $cgi  = shift or die "Need CGI";
   
-  my $view = $cgi->param("view");
+  my $view = $cgi->url_param("view");
   if(defined $view){
-    if($view == "addUser"){
+    if($view eq "addUser"){
       return $self->renderUserPage($cgi);
     }
     return $view;
@@ -78,6 +78,20 @@ sub navbarElements{
     NAME => "Channelrechte verwalten",
     HREF => "module.pl?mod=Security;view=channelRoles"
   }];
+}
+
+sub javascripts{
+  my $self = shift or die "Need Ref";
+  my $view = shift;
+  
+  my @scripts = ();
+  
+  if($view eq "addUser"){
+    push(@scripts,{
+      LOCATION => "Pms/Modules/Security/js/user.js"
+    });
+  }
+  return \@scripts;
 }
 
 1;

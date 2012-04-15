@@ -15,8 +15,6 @@ my $q = CGI->new();
 
 if(!defined $session)
 {
-  warn "Redir";
-  exit(0);
   my $url = 'login.pl';
   if(defined $Pms::Session::lastError){
     $url .= "?error=$Pms::Session::lastError";
