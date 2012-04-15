@@ -18,15 +18,19 @@ my $error = $q->param('error');
 if($usr ne '')
 {
     # process the form
-    if($usr eq "user" and $pwd eq "password")
-    {
+    my $dbh = Pms::Session::databaseConnection();
+    
+    my $sth = $dbh->prepare("SELECT COUNT(*) from pms_admins where username = ? and password = ?");
+    if($sth->execute($usr,$pwd)){
+      my @val = $sth->fetchrow_array;
+      if($val[0] > 0){
         my $session = CGI::Session->new();
+        $session->param('user',$usr);
         print $session->header(-location=>'index.pl');
+        exit(0);
+      }
     }
-    else
-    {
-        print $q->header(-type=>"text/html",-location=>"login.pl?error=1");
-    }
+     print $q->header(-type=>"text/html",-location=>"login.pl?error=2");
 }
 elsif($q->param('action') eq 'logout')
 {

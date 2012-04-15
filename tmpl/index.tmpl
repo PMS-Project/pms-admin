@@ -24,6 +24,10 @@
 <div class="container-fluid">
   <div class="row-fluid">
     <div class="span3">
+      <div class="well">
+        <h3>PMS-Admin Interface</h3>
+        <p><i class="icon-user"></i><TMPL_VAR NAME="USERNAME"></p>
+      </div>
       <div class="well sidebar-nav">
         <ul class="nav nav-list">
           <li class="nav-header">Module</li>
@@ -32,9 +36,19 @@
           <li><a href="#">Security</a></li>
         </ul>
       </div><!--/.well -->
+      <TMPL_IF NAME="MODULE_NAVS">
+      <div class="well sidebar-nav">
+        <ul class="nav nav-list">
+          <li class="nav-header"><TMPL_VAR NAME="CONTENT"></li>
+          <TMPL_LOOP NAME="MODULE_NAVS">
+            <li><a href="<TMPL_VAR NAME=HREF>"><TMPL_VAR NAME="NAME"></a></li>
+          </TMPL_LOOP>
+        </ul>
+      </div><!--/.well -->
+      </TMPL_IF>
     </div><!--/span-->
     <div class="span9">
-      <h2>WELCOME USER</h2>
+      <TMPL_VAR NAME="CONTENT">
     </div>
   </div>
 </div>  

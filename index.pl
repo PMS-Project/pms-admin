@@ -9,25 +9,29 @@ use CGI::Session ( '-ip_match' );
 
 use HTML::Template;
 use Pms::Session;
+use Pms::MainView;
 
-my $session = Pms::Session::restore();
+my $session = Pms::Session::get();
 my $q = CGI->new();
 
 if(!defined $session)
 {
   my $url = 'login.pl';
   if(defined $Pms::Session::lastError){
-    $url .= $Pms::Session::lastError;
+    $url .= "?error=$Pms::Session::lastError";
   }
   print $q->header(-location=>$url);
 }
 else
 {
-    print $q->header(-cache_control=>"no-cache, no-store, must-revalidate");
-    
-    my $baseTemplate = HTML::Template->new(filename => 'tmpl/base.tmpl');
-    my $template     = HTML::Template->new(filename => 'tmpl/index.tmpl');
-    
-    $baseTemplate->param(CONTENT => $template->output);
-    print $baseTemplate->output;
+  my $view = Pms::MainView->new();
+  $view->render("Welcome",$q,$session);
+  #print $q->header(-cache_control=>"no-cache, no-store, must-revalidate");
+  
+  #my $baseTemplate = HTML::Template->new(filename => 'tmpl/base.tmpl');
+  #my $template     = HTML::Template->new(filename => 'tmpl/index.tmpl');
+  
+  #$template->param(USERNAME => $session->param('user'));
+  #$baseTemplate->param(CONTENT => $template->output);
+  #print $baseTemplate->output;
 }
