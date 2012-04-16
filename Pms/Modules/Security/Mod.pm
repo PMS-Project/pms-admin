@@ -35,7 +35,7 @@ sub renderContent{
   my $view = $cgi->url_param("view");
   if(defined $view){
     if($view eq "addUser"){
-      return $self->renderUserPage($cgi);
+      return $self->renderUserPage($cgi,'Pms/Modules/Security/tmpl/addUser.tmpl');
     }
     return $view;
   }
@@ -43,26 +43,11 @@ sub renderContent{
 }
 
 sub renderUserPage{
-  my $self = shift or die "Need Ref";
-  my $cgi  = shift or die "Need CGI";
+  my $self  = shift or die "Need Ref";
+  my $cgi   = shift or die "Need CGI";
+  my $templ = shift or die "Need Template Path";
   
-  my $baseTemplate = HTML::Template->new(filename => 'Pms/Modules/Security/tmpl/addUser.tmpl');
-  
-  my @users = ();
-  my $dbh = Pms::Session::databaseConnection();
-  my $sth = $dbh->prepare("SELECT id,username,forename,name from mod_security_users;");
-  if($sth->execute()){
-    while(my @val = $sth->fetchrow_array){
-      my $hash = {
-        USER_ID       => $val[0],
-        USER_NICKNAME => $val[1],
-        USER_NAME     => $val[2],
-        USER_FORENAME => $val[3],
-      };
-      push(@users,$hash);
-    }
-  }
-  $baseTemplate->param(USERS => \@users);
+  my $baseTemplate = HTML::Template->new(filename => $templ,die_on_bad_params => 0);
   return $baseTemplate->output;
   
 }
@@ -104,7 +89,30 @@ sub dataRequest{
   }elsif($action eq 'delUser'){
     
   }elsif($action eq 'getUsers'){
-    
+      my $baseTemplate = HTML::Template->new(filename => 'Pms/Modules/Security/tmpl/GetUsers.tmpl.json',
+                                             die_on_bad_params => 0
+      );
+  
+      my @users = ();
+      my $dbh = Pms::Session::databaseConnection();
+      my $sth = $dbh->prepare("SELECT id,username,forename,name from mod_security_users;");
+      if($sth->execute()){
+        while(my @val = $sth->fetchrow_array){
+          my $hash = {
+            USER_ID       => $val[0],
+            USER_NICKNAME => $val[1],
+            USER_NAME     => $val[2],
+            USER_FORENAME => $val[3],
+            LAST_ELEMENT  => 0
+          };
+          push(@users,$hash);
+        }
+        if(@users){
+          $users[-1]->{LAST_ELEMENT} = 1;
+        }
+      }
+      $baseTemplate->param(USERS => \@users);
+      return $baseTemplate->output;
   }
   return "{}";
 }

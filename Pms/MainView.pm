@@ -25,7 +25,7 @@ sub new{
 
 sub render{
   my $self = shift or die "Need Ref";
-  my $content = shift or die "Need Content";
+  my $content = shift or die "Need Content Module";
   my $q       = shift or die "Need CGI Query";
   
   my $session = Pms::Session::get();

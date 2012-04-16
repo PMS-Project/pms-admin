@@ -8,29 +8,7 @@
       <th><a class="btn btn-primary" href="#"><i class="icon-user icon-white"></i>Hinzuf&uuml;gen</a></th>
     </tr>
   </thead>
-  <tbody>
-  <TMPL_LOOP NAME="USERS">
-    <tr id="user_<TMPL_VAR NAME="USER_ID">">
-        <td><TMPL_VAR NAME="USER_ID"></td>
-        <td><TMPL_VAR NAME="USER_NAME"></td>
-        <td><TMPL_VAR NAME="USER_FORENAME"></td>
-        <td><TMPL_VAR NAME="USER_NICKNAME"></td>
-        <td>        
-          <div class="btn-group">
-            <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-user icon-white"></i>Bearbeiten</a>
-            <ul class="dropdown-menu">
-              <li><a data-toggle="modal" href="#userEditModal"><i class="icon-pencil"></i> Edit</a></li>
-              <li><a href="#"><i class="icon-trash"></i> Delete</a></li>
-              <!--
-              <li><a href="#"><i class="icon-ban-circle"></i> Ban</a></li>
-              <li class="divider"></li>
-              <li><a href="#"><i class="i"></i> Make admin</a></li>
-              -->
-            </ul>
-          </div>
-        </td>
-      </tr>
-  </TMPL_LOOP>
+  <tbody id="userTableBody">
   </tbody>
 </table>
 
