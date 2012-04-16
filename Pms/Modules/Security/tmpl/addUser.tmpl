@@ -5,12 +5,13 @@
       <th>First Name</th>
       <th>Last Name</th>
       <th>Username</th>
-      <th><a class="btn btn-primary" href="#"><i class="icon-user icon-white"></i>Hinzuf&uuml;gen</a></th>
+      <th></th>
     </tr>
   </thead>
   <tbody id="userTableBody">
   </tbody>
 </table>
+<a class="btn btn-primary" id="addUserButton" href="#"><i class="icon-user icon-white"></i>Hinzuf&uuml;gen</a>
 
 <div class="modal hide fade" id="userEditModal">
   <div class="modal-header">
@@ -38,18 +39,12 @@
               <input type="text" class="input-xlarge" id="inputLastname">
             </div>
           </div>
-          <div class="control-group">
-            <label class="control-label" for="inputPassword">Password</label>
-            <div class="controls">
-              <input type="text" class="input-xlarge" id="inputPassword">
-            </div>
-          </div>
         </fieldset>
       </form>
   </div>
   <div class="modal-footer">
-    <a href="#" class="btn">Close</a>
-    <a href="#" class="btn btn-primary">Save changes</a>
+    <a href="#" class="btn" id="userEditCancel">Close</a>
+    <a href="#" class="btn btn-primary" id="userEditOk">Save changes</a>
   </div>
 </div>
 
