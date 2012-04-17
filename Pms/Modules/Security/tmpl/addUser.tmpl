@@ -48,3 +48,32 @@
   </div>
 </div>
 
+<div class="modal hide fade" id="passwordEditModal">
+  <div class="modal-header">
+    <a class="close" data-dismiss="modal">x</a>
+    <h3>Passwort &auml;ndern</h3>
+  </div>
+  <div class="modal-body">
+  <form class="form-horizontal well">
+        <fieldset>
+          <div class="control-group">
+            <label class="control-label" for="inputPassword">Passwort</label>
+            <div class="controls">
+              <input type="password" class="input-xlarge" id="inputPassword">
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="inputPasswordCheck">Wiederholung</label>
+            <div class="controls">
+              <input type="password" class="input-xlarge" id="inputPasswordCheck">
+            </div>
+          </div>
+        </fieldset>
+      </form>
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn" id="passwordEditCancel">Close</a>
+    <a href="#" class="btn btn-primary" id="passwordEditOk">Save changes</a>
+  </div>
+</div>
+

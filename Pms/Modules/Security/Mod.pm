@@ -140,6 +140,28 @@ sub dataRequest{
         error  => $DBI::errstr
       });      
     }    
+  }elsif($action eq 'changePass'){
+    my $dbh  = Pms::Session::databaseConnection();
+    my $pass = decode_json($cgi->param('POSTDATA'));
+    my $sth  = $dbh->prepare("UPDATE mod_security_users set password = ? where id = ?;");
+    my $rowsAffected = $sth->execute($pass->{password},$pass->{id});
+    if($rowsAffected){
+      if($rowsAffected > 0){
+        return encode_json({
+          result => 1
+        });
+      }else{
+        return encode_json({
+        result => 0,
+        error  => "Record not found"
+        });
+      }
+    }else{
+      return encode_json({
+        result => 0,
+        error  => $DBI::errstr
+      });      
+    }
   }elsif($action eq 'getUsers'){
     my $dbh = Pms::Session::databaseConnection();
     my $sth = $dbh->prepare("SELECT id,username,forename,name from mod_security_users;");

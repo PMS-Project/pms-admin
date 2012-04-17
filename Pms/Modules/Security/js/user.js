@@ -83,12 +83,6 @@ function on_AddUserClicked( ) {
   editUser(newUser);
 }
 
-function on_ChangePasswordClicked(){
-  //use jquery closest to find table row that knows the id
-  $currentEditRow  = $(this).closest('tr');
-  var userId = $currentEditRow.attr('data-userid');
-}
-
 function on_DeleteUserClicked(){
   //use jquery closest to find table row that knows the id
   
@@ -152,10 +146,67 @@ function on_SaveEditUserClicked(){
   });
 }
 
+function on_ChangePasswordClicked(){
+  //use jquery closest to find table row that knows the id
+  $currentEditRow  = $(this).closest('tr');
+  var userId = $currentEditRow.attr('data-userid');
+  currentUser = users[userId];
+  $('#passwordEditModal').modal('show');  
+}
+
+function on_CancelEditPasswordClicked(){
+  $('#passwordEditModal').modal('hide');
+}
+
+function on_SaveEditPasswordClicked(){
+
+  var pass  = $('#inputPassword').val();
+  var check = $('#inputPasswordCheck').val();
+  
+  if(pass != check){
+    addError($('#passwordEditModal .modal-body'),'Fehler!','Passw&ouml;rter stimmen nicht &uuml;berein');
+    return;
+  }
+  
+  var jsonData =JSON.stringify({
+      id : currentUser.id,
+      password : pass
+  });
+  
+  $.postJSON('module.pl?mod=Security;action=changePass',jsonData,function(data){
+    if(data.result == false){
+      alert("Passwort konnte nicht gespeichert werden: "+data.error);
+    }else{
+      $('#passwordEditModal').modal('hide');
+    }
+  }).fail(function(jqXHR, textStatus, errorThrown){ 
+    var message = textStatus;
+    alert("Passwort konnte nicht gespeichert werden: "+message);
+  });
+  return;
+}  
+
+
+function addError ($elem,header,message){
+  
+  //remove old error
+  $elem.find('.alert').remove();
+  
+  var $box = $('<div class="alert alert-block alert-error fade in" id="passwordModalErrorBlock"/>');
+  $box.append($('<a class="close" data-dismiss="alert">x</a>'));
+  $box.append($('<h4 class="alert-heading">'+header+'</h4>'));
+  $box.append($('<p>'+message+'</p>'));
+  
+  $box.prependTo($elem);
+}
+
 $(document).ready(function(){
   enableBlockUI();
   $('#userEditCancel').click(on_CancelEditUserClicked);
   $('#userEditOk').click(on_SaveEditUserClicked);
+  $('#passwordEditCancel').click(on_CancelEditPasswordClicked);
+  $('#passwordEditOk').click(on_SaveEditPasswordClicked);
+  $('#passwordModalErrorBlock').alert();
   $('#addUserButton').click(on_AddUserClicked);
   loadUsers();
 });

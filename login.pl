@@ -51,6 +51,9 @@ else
   
   my $baseTemplate = HTML::Template->new(filename => 'tmpl/base.tmpl');
   $baseTemplate->param(CONTENT => $template->output);
+  $baseTemplate->param(MODULE_SCRIPTS => [{
+      LOCATION => "js/login.js"
+  }]);
   
   # send the obligatory Content-Type and print the template output
   print "Content-type: text/html\n\n";

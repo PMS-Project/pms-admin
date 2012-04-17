@@ -14,12 +14,15 @@
 </div>
 
 <div class="container" color="black">
+  <TMPL_IF NAME="HAS_ERROR">
+    <div class="alert alert-block alert-error fade in">
+      <a class="close" data-dismiss="alert">x</a>
+      <h4 class="alert-heading">Error!</h4>
+      <p><TMPL_VAR NAME="ERROR"></p>
+    </div>
+  </TMPL_IF>
   <section>
-    <div class="span4 offset4">
-      <TMPL_IF NAME="HAS_ERROR">
-        <span class="label label-important"><TMPL_VAR NAME="ERROR"></span>
-      </TMPL_IF>
-      
+    <div class="span4 offset4">      
       <form class="well">
         <input type="text" class="input-medium" placeholder="Username" name="user"/>
         <input type="password" class="input-medium" placeholder="Password" name="password"/>
