@@ -12,10 +12,52 @@ use CGI::Session ( '-ip_match' );
 
 use Pms::BaseModule;
 use Pms::Session;
-use HTML::Template;
-use Data::Dumper;
+use Pms::Modules::Security::User;
+use Pms::Modules::Security::Channel;
+use Pms::Modules::Security::UserRoles;
+use Pms::Modules::Security::ChannelRoles;
 
 our @ISA = ("Pms::BaseModule");
+
+our %viewToBackend = (
+  addUser    => \&Pms::Modules::Security::User::render,
+  addChannel => \&Pms::Modules::Security::Channel::render,
+  userRoles  => \&Pms::Modules::Security::UserRoles::render,
+  channelRoles  => \&Pms::Modules::Security::ChannelRoles::render
+);
+
+our %viewToScripts = (
+  addUser    => [{
+      LOCATION => "Pms/Modules/Security/js/user.js"
+  }],
+  addChannel => [{
+      LOCATION => "Pms/Modules/Security/js/channel.js"
+  }],
+  userRoles  => [{
+      LOCATION => "Pms/Modules/Security/js/userRoles.js"
+  }],
+  channelRoles  => [{
+      LOCATION => "Pms/Modules/Security/js/channelRoles.js"
+  }],  
+);
+
+our %actionToBackend = (
+  saveUser   => \&Pms::Modules::Security::User::ajaxSaveUser,
+  delUser    => \&Pms::Modules::Security::User::ajaxDelUser,
+  changePass => \&Pms::Modules::Security::User::ajaxChangePass,
+  getUsers   => \&Pms::Modules::Security::User::ajaxGetUsers,
+  saveChannel=> \&Pms::Modules::Security::Channel::ajaxSaveChannel,
+  delChannel => \&Pms::Modules::Security::Channel::ajaxDelChannel,
+  getChannels => \&Pms::Modules::Security::Channel::ajaxGetChannels,
+  getAvailableUserRoles => \&Pms::Modules::Security::UserRoles::ajaxGetAvailableUserRoles,
+  getUserRoles => \&Pms::Modules::Security::UserRoles::ajaxGetUserRoles,
+  addUserRole  => \&Pms::Modules::Security::UserRoles::ajaxAddUserRole,
+  removeUserRole => \&Pms::Modules::Security::UserRoles::ajaxRemoveUserRole,
+  getAvailableChannelRoles => \&Pms::Modules::Security::ChannelRoles::ajaxGetAvailableChannelRoles,
+  getChannelRoles => \&Pms::Modules::Security::ChannelRoles::ajaxGetChannelRoles,
+  addChannelRole  => \&Pms::Modules::Security::ChannelRoles::ajaxAddChannelRole,
+  removeChannelRole => \&Pms::Modules::Security::ChannelRoles::ajaxRemoveChannelRole
+);
 
 sub new{
   my $class = shift;
@@ -36,22 +78,12 @@ sub renderContent{
   
   my $view = $cgi->url_param("view");
   if(defined $view){
-    if($view eq "addUser"){
-      return $self->renderUserPage($cgi,'Pms/Modules/Security/tmpl/addUser.tmpl');
+    if(!defined $viewToBackend{$view}){
+      return "Unknown View";
     }
-    return $view;
+    return $viewToBackend{$view}->($cgi);
   }
   return "";
-}
-
-sub renderUserPage{
-  my $self  = shift or die "Need Ref";
-  my $cgi   = shift or die "Need CGI";
-  my $templ = shift or die "Need Template Path";
-  
-  my $baseTemplate = HTML::Template->new(filename => $templ,die_on_bad_params => 0);
-  return $baseTemplate->output;
-  
 }
 
 sub navbarElements{
@@ -62,6 +94,9 @@ sub navbarElements{
     NAME => "Userrechte verwalten",
     HREF => "module.pl?mod=Security;view=userRoles"
   },{
+    NAME => "Channel verwalten",
+    HREF => "module.pl?mod=Security;view=addChannel"
+  },{
     NAME => "Channelrechte verwalten",
     HREF => "module.pl?mod=Security;view=channelRoles"
   }];
@@ -71,22 +106,10 @@ sub javascripts{
   my $self = shift or die "Need Ref";
   my $view = shift;
   
-  my @scripts = ();
-  
-  if($view eq "addUser"){
-    push(@scripts,{
-      LOCATION => "Pms/Modules/Security/js/user.js"
-    });
-  }elsif($view eq "userRoles"){
-    push(@scripts,{
-      LOCATION => "Pms/Modules/Security/js/roles.js"
-    });
-  }elsif($view eq "userRoles"){
-    push(@scripts,{
-      LOCATION => "Pms/Modules/Security/js/channelRoles.js"
-    });
+  if(defined $viewToScripts{$view}){
+    return $viewToScripts{$view};
   }
-  return \@scripts;
+  return [];
 }
 
 sub dataRequest{
@@ -94,99 +117,12 @@ sub dataRequest{
   my $cgi  = shift or die "Need CGI";
   
   my $action = $cgi->url_param('action');
-  if($action eq 'saveUser'){
-    
-    my $user = decode_json($cgi->param('POSTDATA'));
-    
-    my $dbh = Pms::Session::databaseConnection();
-    if($user->{id} >= 0){
-      my $sth = $dbh->prepare("UPDATE mod_security_users SET username = ?,forename = ?,name = ? where id = ?;");
-      if($sth->execute($user->{nickName},$user->{firstName},$user->{name},$user->{id})){
-        my $id = $user->{id};
-        my %result = (
-          result => 1,
-          id => $id
-        );
-        return encode_json(\%result);
-      }
-    }else{
-      my $sth = $dbh->prepare("INSERT into mod_security_users (username,forename,name) VALUES (?,?,?);");
-      if($sth->execute($user->{nickName},$user->{firstName},$user->{name})){
-        my $id = $dbh->last_insert_id(undef, undef, qw(mod_security_users id));
-        my %result = (
-          result => 1,
-          id => $id
-        );
-        return encode_json(\%result);
-      }
-    }
+  if(!defined $actionToBackend{$action}){
     return encode_json({
       result => 0,
-      error  => $DBI::errstr
+      error  => "Unknown Action"
     });
-    
-  }elsif($action eq 'delUser'){
-    my $dbh  = Pms::Session::databaseConnection();
-    my $user = decode_json($cgi->param('POSTDATA'));
-    my $sth  = $dbh->prepare("DELETE from mod_security_users where id = ?;");
-    if($sth->execute($user->{id})){
-      my $id = $user->{id};
-      return encode_json({
-        result => 1
-      });
-    }else{
-      return encode_json({
-        result => 0,
-        error  => $DBI::errstr
-      });      
-    }    
-  }elsif($action eq 'changePass'){
-    my $dbh  = Pms::Session::databaseConnection();
-    my $pass = decode_json($cgi->param('POSTDATA'));
-    my $sth  = $dbh->prepare("UPDATE mod_security_users set password = ? where id = ?;");
-    my $rowsAffected = $sth->execute($pass->{password},$pass->{id});
-    if($rowsAffected){
-      if($rowsAffected > 0){
-        return encode_json({
-          result => 1
-        });
-      }else{
-        return encode_json({
-        result => 0,
-        error  => "Record not found"
-        });
-      }
-    }else{
-      return encode_json({
-        result => 0,
-        error  => $DBI::errstr
-      });      
-    }
-  }elsif($action eq 'getUsers'){
-    my $dbh = Pms::Session::databaseConnection();
-    my $sth = $dbh->prepare("SELECT id,username,forename,name from mod_security_users;");
-    if($sth->execute()){
-      my @users = ();
-      while(my @val = $sth->fetchrow_array){
-        my $hash = {
-          id        => $val[0],
-          nickName  => $val[1],
-          name      => $val[3],
-          firstName => $val[2]
-        };
-        push(@users,$hash);
-      }
-      return encode_json(\@users);
-    }else{
-      return encode_json({
-        result => 0,
-        error  => $DBI::errstr
-      });      
-    }
   }
-  return encode_json({
-    result => 0,
-    error  => "Unknown Action"
-  });
+  return $actionToBackend{$action}->($cgi);
 }
 1;
