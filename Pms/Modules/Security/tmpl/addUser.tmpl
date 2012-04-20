@@ -1,0 +1,79 @@
+<table class="table table-condensed">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Username</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="userTableBody">
+  </tbody>
+</table>
+<a class="btn btn-primary" id="addUserButton" href="#"><i class="icon-user icon-white"></i>Hinzuf&uuml;gen</a>
+
+<div class="modal hide fade" id="userEditModal">
+  <div class="modal-header">
+    <a class="close" data-dismiss="modal">x</a>
+    <h3>Edit User</h3>
+  </div>
+  <div class="modal-body">
+  <form class="form-horizontal well">
+        <fieldset>
+          <div class="control-group">
+            <label class="control-label" for="inputNickname">Nickname</label>
+            <div class="controls">
+              <input type="text" class="input-xlarge" id="inputNickname">
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="inputFirstname">First Name</label>
+            <div class="controls">
+              <input type="text" class="input-xlarge" id="inputFirstname">
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="inputLastname">Last Name</label>
+            <div class="controls">
+              <input type="text" class="input-xlarge" id="inputLastname">
+            </div>
+          </div>
+        </fieldset>
+      </form>
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn" id="userEditCancel">Close</a>
+    <a href="#" class="btn btn-primary" id="userEditOk">Save changes</a>
+  </div>
+</div>
+
+<div class="modal hide fade" id="passwordEditModal">
+  <div class="modal-header">
+    <a class="close" data-dismiss="modal">x</a>
+    <h3>Passwort &auml;ndern</h3>
+  </div>
+  <div class="modal-body">
+  <form class="form-horizontal well">
+        <fieldset>
+          <div class="control-group">
+            <label class="control-label" for="inputPassword">Passwort</label>
+            <div class="controls">
+              <input type="password" class="input-xlarge" id="inputPassword">
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="inputPasswordCheck">Wiederholung</label>
+            <div class="controls">
+              <input type="password" class="input-xlarge" id="inputPasswordCheck">
+            </div>
+          </div>
+        </fieldset>
+      </form>
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn" id="passwordEditCancel">Close</a>
+    <a href="#" class="btn btn-primary" id="passwordEditOk">Save changes</a>
+  </div>
+</div>
+
