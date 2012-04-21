@@ -8,6 +8,7 @@ use warnings;
 use DBI;
 use DBD::mysql;
 use CGI::Session ( '-ip_match' );
+use PmsConfig;
 
 our $lastError = undef;
 our $session   = undef;
@@ -34,12 +35,12 @@ sub get {
 sub databaseConnection{
   if(!defined $dbh){
     # CONFIG VARIABLES
-    my $platform = "mysql";
-    my $database = "pms";
-    my $host     = "localhost";
-    my $port     = "3306";
-    my $user     = "pms";
-    my $pw       = "secret";
+    my $platform = $PmsConfig::database{platform} or "mysql";
+    my $database = $PmsConfig::database{database} or "pms";
+    my $host     = $PmsConfig::database{host} or "localhost";
+    my $port     = $PmsConfig::database{port} or "3306";
+    my $user     = $PmsConfig::database{user} or "pms";
+    my $pw       = $PmsConfig::database{password} or "secret";
 
     #DATA SOURCE NAME
     my $dsn = "dbi:$platform:$database:$host:$port";

@@ -22,7 +22,6 @@ sub new{
   return $self;
 }
 
-
 sub render{
   my $self = shift or die "Need Ref";
   my $content = shift or die "Need Content Module";
@@ -34,8 +33,6 @@ sub render{
     print $session->header(-location=>'index.pl');
     return;
   }
-  my $modNavElems = shift;
-  
   
   print $q->header(-cache_control=>"no-cache, no-store, must-revalidate");
   
