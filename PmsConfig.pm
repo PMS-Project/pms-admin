@@ -15,21 +15,6 @@ our %database = (
 
 our @modules = (
   {
-    fqn      => "Database",
-    name     => "Datenbank",
-    view     => ""
-  },
-  {
-    fqn      => "Backlog",
-    name     => "Backlog",
-    view     => ""
-  },
-  {
-    fqn      => "Motd",
-    name     => "Motd",
-    view     => ""
-  },
-  {
     fqn      => "Security",
     name     => "Sicherheit",
     view     => "addUser"

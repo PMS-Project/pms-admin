@@ -46,7 +46,7 @@ sub databaseConnection{
     my $dsn = "dbi:$platform:$database:$host:$port";
 
     # PERL DBI CONNECT (RENAMED HANDLE)
-    $dbh = DBI->connect($dsn, $user, $pw) or die "Unable to connect: $DBI::errstr\n";
+    $dbh = DBI->connect($dsn, $user, $pw,{mysql_enable_utf8 => 1}) or die "Unable to connect: $DBI::errstr\n";
   }
   return $dbh;
 }
