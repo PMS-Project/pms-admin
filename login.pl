@@ -1,5 +1,16 @@
 #!/usr/bin/perl
 
+=begin nd
+
+  Script: login.pl
+  
+  Description:
+  Renders the login page, and checks the username
+  and password. 
+  If there is already a existing session it will redirect
+  the browser to the index.pl script.
+=cut
+
 use strict;
 use CGI;
 use CGI::Carp qw/fatalsToBrowser warningsToBrowser/;

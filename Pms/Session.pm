@@ -1,4 +1,20 @@
-#!/usr/bin/perl
+#!/usr/bin/perl -w
+=begin nd
+
+  Package: Pms::Session
+  
+  Description:
+  
+  This Package implements some helper functions for the 
+  Session handling. 
+  It uses some global Variables that are
+  shared by all of the code anyway. 
+  Also this variables
+  live only as long as the request does.
+  
+  This Module is not object-oriented
+  
+=cut
 
 package Pms::Session;
 
@@ -10,10 +26,39 @@ use DBD::mysql;
 use CGI::Session ( '-ip_match' );
 use PmsConfig;
 
+=begin nd
+  variable:
+  The last error-code
+=cut
 our $lastError = undef;
-our $session   = undef;
-our $dbh       = undef;
 
+=begin nd
+  variable:
+  The current session object
+=cut
+my $session   = undef;
+
+=begin nd
+  variable:
+  The current database connection
+=cut
+my $dbh       = undef;
+
+=begin nd
+
+  Function: get
+  Returns the session object.
+  If there is no current session object it tries to load 
+  the session. If the loading fails the function will
+  set the <$lastError> variable to a error code.
+  
+  Access: 
+    Public
+  
+  Returns:
+    *undef* in case of a error or 
+    the CGI::Session object.
+=cut
 sub get {
   if(!defined $session){
     $session = CGI::Session->load(); 
@@ -32,6 +77,19 @@ sub get {
   return $session;
 }
 
+=begin nd
+
+  Function: databaseConnection
+  Returns the dbh object.
+  If there is no current database connection
+  the function tries to create one.
+  
+  Access: 
+    Public
+  
+  Returns:
+    a DBI object
+=cut
 sub databaseConnection{
   if(!defined $dbh){
     # CONFIG VARIABLES
@@ -51,6 +109,18 @@ sub databaseConnection{
   return $dbh;
 }
 
+=begin nd
+
+  Function: errorMessage
+  Converts the current error code in
+  the <$lastError> var into a string.
+  
+  Access: 
+    Public
+  
+  Returns:
+    a string containing the last error message
+=cut
 sub errorMessage {
   my $code = shift or die "Need Error Code";
   

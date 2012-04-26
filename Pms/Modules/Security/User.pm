@@ -1,3 +1,14 @@
+#!/usr/bin/perl -w
+=begin nd
+
+  Package: Pms::Modules::Security::User
+  
+  Description:
+  This is the Implementation of the UserEdit View Backend. 
+  This module is not Object based. All Methods can be used 
+  directly. 
+=cut
+
 package Pms::Modules::Security::User;
 
 use strict;
@@ -12,7 +23,20 @@ use Pms::BaseModule;
 use Pms::Session;
 use HTML::Template;
 
+=begin nd
 
+  Function: render
+  Creates the html code of the user-edit view
+  
+  Access: 
+    Public
+  
+  Parameters:
+    $cgi - reference to the current CGI request object
+    
+  Returns:
+    a *html-string*
+=cut
 sub render{
   my $cgi   = shift or die "Need CGI";
   
@@ -20,6 +44,20 @@ sub render{
   return $baseTemplate->output;
 }
 
+=begin nd
+
+  Function: ajaxGetUsers
+  Returns all currently available users in a json document
+  
+  Access: 
+    Public
+  
+  Parameters:
+    $cgi - reference to the current CGI request object
+    
+  Returns:
+    a *json-string*
+=cut
 sub ajaxGetUsers {
     my $cgi  = shift or die "Need CGI";
     
@@ -45,6 +83,21 @@ sub ajaxGetUsers {
     }
 }
 
+=begin nd
+
+  Function: ajaxDelUser
+  Removes a user from the database.
+  Returns a result json document.
+  
+  Access: 
+    Public
+  
+  Parameters:
+    $cgi - reference to the current CGI request object
+    
+  Returns:
+    a *json-string*
+=cut
 sub ajaxDelUser {
     my $cgi  = shift or die "Need CGI";
     
@@ -64,6 +117,22 @@ sub ajaxDelUser {
     }   
 }
 
+=begin nd
+
+  Function: ajaxSaveUser
+  Inserts or Updates a user in the database.
+  Returns the id of the user and a return value 
+  as a JSON document.
+  
+  Access: 
+    Public
+  
+  Parameters:
+    $cgi - reference to the current CGI request object
+    
+  Returns:
+    a *json-string*
+=cut
 sub ajaxSaveUser {
     my $cgi  = shift or die "Need CGI";
     my $user = decode_json($cgi->param('POSTDATA'));
@@ -96,6 +165,22 @@ sub ajaxSaveUser {
     });
 }
 
+=begin nd
+
+  Function: ajaxChangePass
+  Changes the password of a user in the database.
+  Returns a JSON document containing the result
+  of the operation.
+  
+  Access: 
+    Public
+  
+  Parameters:
+    $cgi - reference to the current CGI request object
+    
+  Returns:
+    a *json-string*
+=cut
 sub ajaxChangePass{
     my $cgi  = shift or die "Need CGI";
     my $dbh  = Pms::Session::databaseConnection();

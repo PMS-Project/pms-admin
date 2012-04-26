@@ -1,3 +1,13 @@
+#!/usr/bin/perl -w
+=begin nd
+  Package: Pms::Modules::Security::UserRoles
+  
+  Description:
+  This is the Implementation of the UserEdit View Backend. 
+  This module is not Object based. All Methods can be used 
+  directly. 
+=cut
+
 package Pms::Modules::Security::UserRoles;
 
 use strict;
@@ -12,6 +22,20 @@ use Pms::BaseModule;
 use Pms::Session;
 use HTML::Template;
 
+=begin nd
+
+  Function: render
+  Creates the html code of the user-roles-edit view
+  
+  Access: 
+    Public
+  
+  Parameters:
+    $cgi - reference to the current CGI request object
+    
+  Returns:
+    a *html-string*
+=cut
 sub render{
   my $cgi   = shift or die "Need CGI";
   
@@ -19,6 +43,21 @@ sub render{
   return $baseTemplate->output;
 }
 
+=begin nd
+
+  Function: ajaxGetAvailableUserRoles
+  Returns all currently available user roles in a
+  json document.
+  
+  Access: 
+    Public
+  
+  Parameters:
+    $cgi - reference to the current CGI request object
+    
+  Returns:
+    a *json-string*
+=cut
 sub ajaxGetAvailableUserRoles{
   my $cgi  = shift or die "Need CGI";
   
@@ -43,6 +82,21 @@ sub ajaxGetAvailableUserRoles{
   }
 }
 
+=begin nd
+
+  Function: ajaxGetUserRoles
+  Returns all user roles currently assigned to 
+  a user in a json document
+  
+  Access: 
+    Public
+  
+  Parameters:
+    $cgi - reference to the current CGI request object
+    
+  Returns:
+    a *json-string*
+=cut
 sub ajaxGetUserRoles{
   my $cgi  = shift or die "Need CGI";
   
@@ -66,6 +120,21 @@ sub ajaxGetUserRoles{
   }  
 }
 
+=begin nd
+
+  Function: ajaxAddUserRole
+  Adds a user-role to the roleset of a user
+  and returns the result as a JSON document
+  
+  Access: 
+    Public
+  
+  Parameters:
+    $cgi - reference to the current CGI request object
+    
+  Returns:
+    a *json-string*
+=cut
 sub ajaxAddUserRole{
   my $cgi  = shift or die "Need CGI";
   
@@ -84,6 +153,21 @@ sub ajaxAddUserRole{
   });
 }
 
+=begin nd
+
+  Function: ajaxRemoveUserRole
+  Removes a user-role from the roleset of a user
+  and returns the result as a JSON document
+  
+  Access: 
+    Public
+  
+  Parameters:
+    $cgi - reference to the current CGI request object
+    
+  Returns:
+    a *json-string*
+=cut
 sub ajaxRemoveUserRole{
   my $cgi  = shift or die "Need CGI";
   
