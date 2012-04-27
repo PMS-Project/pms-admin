@@ -1,3 +1,16 @@
+#!/usr/bin/perl -w
+=begin nd
+
+  Package: Pms::Modules::Security::ChannelRoles
+  
+  Description:
+  
+  This is the Implementation of the ChannelRolesEdit View Backend. 
+  This module is not Object based. All Methods can be used 
+  directly.
+  
+=cut
+
 package Pms::Modules::Security::ChannelRoles;
 
 use strict;
@@ -12,6 +25,20 @@ use Pms::BaseModule;
 use Pms::Session;
 use HTML::Template;
 
+=begin nd
+
+  Function: render
+  Creates the html code of the channelroles-edit view
+  
+  Access: 
+    Public
+  
+  Parameters:
+    $cgi - reference to the current CGI request object
+    
+  Returns:
+    a *html-string*
+=cut
 sub render{
   my $cgi   = shift or die "Need CGI";
   
@@ -19,6 +46,21 @@ sub render{
   return $baseTemplate->output;
 }
 
+=begin nd
+
+  Function: ajaxGetAvailableChannelRoles
+  Returns all currently available channelsroles in a
+  json document.
+  
+  Access: 
+    Public
+  
+  Parameters:
+    $cgi - reference to the current CGI request object
+    
+  Returns:
+    a *json-string*
+=cut
 sub ajaxGetAvailableChannelRoles{
   my $cgi  = shift or die "Need CGI";
   
@@ -43,6 +85,21 @@ sub ajaxGetAvailableChannelRoles{
   }
 }
 
+=begin nd
+
+  Function: ajaxGetChannelRoles
+  Returns all channel roles currently assigned to 
+  a user in a json document
+  
+  Access: 
+    Public
+  
+  Parameters:
+    $cgi - reference to the current CGI request object
+    
+  Returns:
+    a *json-string*
+=cut
 sub ajaxGetChannelRoles{
   my $cgi  = shift or die "Need CGI";
   
@@ -66,6 +123,21 @@ sub ajaxGetChannelRoles{
   }  
 }
 
+=begin nd
+
+  Function: ajaxAddChannelRole
+  Adds a channel-role to the roleset of a user
+  and returns the result as a JSON document
+  
+  Access: 
+    Public
+  
+  Parameters:
+    $cgi - reference to the current CGI request object
+    
+  Returns:
+    a *json-string*
+=cut
 sub ajaxAddChannelRole{
   my $cgi  = shift or die "Need CGI";
   
@@ -84,6 +156,21 @@ sub ajaxAddChannelRole{
   });
 }
 
+=begin nd
+
+  Function: ajaxRemoveChannelRole
+  Removes a channel-role from the roleset of a user
+  and returns the result as a JSON document
+  
+  Access: 
+    Public
+  
+  Parameters:
+    $cgi - reference to the current CGI request object
+    
+  Returns:
+    a *json-string*
+=cut
 sub ajaxRemoveChannelRole{
   my $cgi  = shift or die "Need CGI";
   

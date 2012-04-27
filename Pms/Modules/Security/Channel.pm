@@ -1,3 +1,16 @@
+#!/usr/bin/perl -w
+=begin nd
+
+  Package: Pms::Modules::Security::Channel
+  
+  Description:
+  
+  This is the Implementation of the ChannelEdit View Backend. 
+  This module is not Object based. All Methods can be used 
+  directly.
+  
+=cut
+
 package Pms::Modules::Security::Channel;
 
 use strict;
@@ -12,7 +25,20 @@ use Pms::BaseModule;
 use Pms::Session;
 use HTML::Template;
 
+=begin nd
 
+  Function: render
+  Creates the html code of the channel-edit view
+  
+  Access: 
+    Public
+  
+  Parameters:
+    $cgi - reference to the current CGI request object
+    
+  Returns:
+    a *html-string*
+=cut
 sub render{
   my $cgi   = shift or die "Need CGI";
   
@@ -20,6 +46,21 @@ sub render{
   return $baseTemplate->output;
 }
 
+=begin nd
+
+  Function: ajaxGetChannels
+  Returns all currently available channels in a
+  json document.
+  
+  Access: 
+    Public
+  
+  Parameters:
+    $cgi - reference to the current CGI request object
+    
+  Returns:
+    a *json-string*
+=cut
 sub ajaxGetChannels {
     my $cgi  = shift or die "Need CGI";
     
@@ -44,6 +85,22 @@ sub ajaxGetChannels {
     }
 }
 
+=begin nd
+
+  Function: ajaxDelChannel
+  Removes a channel from the database,
+  it requires a JSON document in the POSTDATA
+  element of the CGI request
+  
+  Access: 
+    Public
+  
+  Parameters:
+    $cgi - reference to the current CGI request object
+    
+  Returns:
+    a *json-string*
+=cut
 sub ajaxDelChannel {
     my $cgi  = shift or die "Need CGI";
     
@@ -63,6 +120,21 @@ sub ajaxDelChannel {
     }   
 }
 
+=begin nd
+
+  Function: ajaxSaveChannel
+  Inserts or updates a chennel record in the 
+  database, depending on the id field in the request.
+  
+  Access: 
+    Public
+  
+  Parameters:
+    $cgi - reference to the current CGI request object
+    
+  Returns:
+    a *json-string*
+=cut
 sub ajaxSaveChannel {
     my $cgi  = shift or die "Need CGI";
     my $channel = decode_json($cgi->param('POSTDATA'));

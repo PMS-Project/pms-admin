@@ -1,4 +1,17 @@
-#!/usr/bin/perl
+#!/usr/bin/perl -w
+=begin nd
+
+  Package: Pms::MainView
+  
+  Description:
+  
+  The MainView of the admin interface. This
+  class renders the navigation containers and does
+  the basic layout of the UI. 
+  It can either render a string, or the contents
+  of a BaseModule into a container defined in the
+  HTML index.tmpl template file.
+=cut
 
 package Pms::MainView;
 
@@ -14,6 +27,10 @@ use Pms::Session;
 use Pms::BaseModule;
 use HTML::Template;
 
+=begin nd
+  Constructor: new
+  Initializes the Object , no arguments
+=cut
 sub new{
   my $class = shift;
   my $self = {};
@@ -22,6 +39,21 @@ sub new{
   return $self;
 }
 
+=begin nd
+
+  Function: render
+  Renders the page into HTML and writes it into a string
+  
+  Access: 
+    Public
+  
+  Parameters:
+    $content - a string containing the content HTML code, 
+               or a module reference to a <Pms::BaseModule> subclass
+    
+  Returns:
+    a string containing HTML code
+=cut
 sub render{
   my $self = shift or die "Need Ref";
   my $content = shift or die "Need Content Module";
@@ -53,6 +85,7 @@ sub render{
     MODULE_NAVS => \@modules,
   );
   
+  #check if we got a Pms::BaseModule subclass
   if (blessed($content) && $content->isa( 'Pms::BaseModule')) {
     $templParams{CONTENT}         = $content->renderContent($q);
     $templParams{MODULE_SUB_NAVS} = $content->navbarElements();

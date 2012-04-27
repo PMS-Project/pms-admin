@@ -1,4 +1,18 @@
-#!/usr/bin/perl
+#!/usr/bin/perl -w
+=begin nd
+
+  Package: Pms::Modules::Security::Mod
+  
+  Description:
+  
+  This is the Main Object of the Admin-Interface Security Module. 
+  
+  It has 4 different Views, every View  is implemented in its own Backend, 
+  
+  and it uses Hashes to map the backend function names to the action and view
+  parameters that are passed in the URL.
+  
+=cut
 
 package Pms::Modules::Security::Mod;
 
@@ -19,6 +33,10 @@ use Pms::Modules::Security::ChannelRoles;
 
 our @ISA = ("Pms::BaseModule");
 
+=begin nd
+  hash: 
+  maps the view names to the backend render callback functions
+=cut
 our %viewToBackend = (
   addUser    => \&Pms::Modules::Security::User::render,
   addChannel => \&Pms::Modules::Security::Channel::render,
@@ -26,6 +44,10 @@ our %viewToBackend = (
   channelRoles  => \&Pms::Modules::Security::ChannelRoles::render
 );
 
+=begin nd
+  hash: 
+  maps the view names to required javascript files
+=cut
 our %viewToScripts = (
   addUser    => [{
       LOCATION => "Pms/Modules/Security/js/user.js"
@@ -41,6 +63,10 @@ our %viewToScripts = (
   }],  
 );
 
+=begin nd
+  hash: 
+  maps the action names, to the backend callback functions
+=cut
 our %actionToBackend = (
   saveUser   => \&Pms::Modules::Security::User::ajaxSaveUser,
   delUser    => \&Pms::Modules::Security::User::ajaxDelUser,
@@ -59,6 +85,10 @@ our %actionToBackend = (
   removeChannelRole => \&Pms::Modules::Security::ChannelRoles::ajaxRemoveChannelRole
 );
 
+=begin nd
+  Constructor: new
+  Initializes the Object , no arguments
+=cut
 sub new{
   my $class = shift;
   my $self  = $class->SUPER::new();
@@ -68,10 +98,24 @@ sub new{
   return $self;
 }
 
+=begin nd
+
+  Function: name
+  
+  Reimplemented:
+  See <Pms::BaseModule::name>
+=cut
 sub name{
   return "Sicherheit";
 }
 
+=begin nd
+
+  Function: renderContent
+  
+  Reimplemented:
+  See <Pms::BaseModule::renderContent>
+=cut
 sub renderContent{
   my $self = shift or die "Need Ref";
   my $cgi  = shift or die "Need CGI";
@@ -86,6 +130,13 @@ sub renderContent{
   return "";
 }
 
+=begin nd
+
+  Function: navbarElements
+  
+  Reimplemented:
+  See <Pms::BaseModule::navbarElements>
+=cut
 sub navbarElements{
   return [{
     NAME => "User bearbeiten",
@@ -102,6 +153,13 @@ sub navbarElements{
   }];
 }
 
+=begin nd
+
+  Function: javascripts
+  
+  Reimplemented:
+  See <Pms::BaseModule::javascripts>
+=cut
 sub javascripts{
   my $self = shift or die "Need Ref";
   my $view = shift;
@@ -112,6 +170,13 @@ sub javascripts{
   return [];
 }
 
+=begin nd
+
+  Function: dataRequest
+  
+  Reimplemented:
+  See <Pms::BaseModule::dataRequest>
+=cut
 sub dataRequest{
   my $self = shift or die "Need Ref";
   my $cgi  = shift or die "Need CGI";

@@ -1,13 +1,29 @@
 #!/usr/bin/perl
 
-#this script will render module pages and invoke
-#functions as they are available from the script
-#it uses the following GET informations:
-#  http://localhost/pms-admin/module.pl?mod=Security;view=addUser
-#  The mod variable tells module.pl which module it should load
-#  The view variable tells module.pl that it should render a page, if this variable is not present
-#      the script assumes that we did a data-request which means it will call BaseModule::dataRequest()
-#      this can be used for ajax-based requests
+=begin nd
+
+  Script: module.pl
+  
+  Description:
+  This script will render module pages and invoke functions as they are available from the script.
+  
+  
+  It uses the following GET informations:
+  
+  http://localhost/pms-admin/module.pl?mod=Security;view=addUser
+  
+  
+  The mod variable tells module.pl which module it should load
+  
+  The view variable tells module.pl that it should render a page.
+  
+  If there is the action variable present, instead of the view var,
+  
+  the script assumes that we did a data-request which means it will call BaseModule::dataRequest()
+  
+  this can be used for ajax-based requests
+=cut
+
 
 
 use strict;

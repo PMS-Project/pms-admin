@@ -1,6 +1,14 @@
 #!/usr/bin/perl
+=begin nd
 
-# index.pl
+  Script: index.pl
+  
+  Description:
+  Renders the welcome page, has no other function
+  than saying hello to the user and let him choose
+  what we wants to do from the navigation bars.
+=cut
+
 use strict;
 use warnings;
 use CGI;
@@ -26,12 +34,4 @@ else
 {
   my $view = Pms::MainView->new();
   $view->render("Welcome",$q,$session);
-  #print $q->header(-cache_control=>"no-cache, no-store, must-revalidate");
-  
-  #my $baseTemplate = HTML::Template->new(filename => 'tmpl/base.tmpl');
-  #my $template     = HTML::Template->new(filename => 'tmpl/index.tmpl');
-  
-  #$template->param(USERNAME => $session->param('user'));
-  #$baseTemplate->param(CONTENT => $template->output);
-  #print $baseTemplate->output;
 }

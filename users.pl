@@ -1,6 +1,14 @@
 #!/usr/bin/perl
 
-# index.pl
+=begin nd
+
+  Script: users.pl
+  
+  Description:
+  Renders the user administration page, and handles all
+  ajax requests to add and remove pms-admin users (not chat users)
+=cut
+
 use strict;
 use warnings;
 use CGI;
